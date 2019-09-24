@@ -1,0 +1,34 @@
+#Import Libraries
+
+import seaborn as sns
+import pandas as pd
+import matplotlib.pyplot as plt
+
+
+
+#Set Store data into dictionary
+
+raw_data = raw_data = {'0': ['State','TX', 'FL', 'CA', 'NC', 'GA', 'IL','OH','MO','PA','TN','VA','AL','LA','OK','AR','IN','AZ', 'SC','NY','MI'], 
+        '1': ['Stores', 516,340,281,195,189,160,146,137,137,137,136,132,124,122,119,114,113,110,98,95]}
+
+
+#  Transform dictionary data into dataframe  
+df = pd.DataFrame(raw_data)
+
+#Set figure dimensions
+df.columns = df.iloc[0]
+
+df=df.drop(df.index[0])
+
+a4_dims = (20, 12)
+fig, ax = plt.subplots(figsize=a4_dims)
+
+#Create Barplot
+ax = sns.barplot(x="State", y="Stores", palette= "RdBu",data=df, dodge=False)
+
+for p in ax.patches:
+    ax.annotate(format(int(p.get_height()), '.2f'), (p.get_x() + p.get_width() / 2., p.get_height()), ha = 'center', va = 'center', xytext = (0, 10), textcoords = 'offset points')
+
+# Save figure as PNG file
+fig = ax.get_figure()
+fig.savefig("output.png")
